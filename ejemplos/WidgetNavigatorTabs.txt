@@ -1,0 +1,61 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_application_1/pages/first.dart';
+import 'package:flutter_application_1/pages/second.dart';
+import 'package:flutter_application_1/pages/third.dart';
+
+void main() {
+  runApp(const MaterialApp(
+    home: MyNavigator(),
+  ));
+}
+
+class MyNavigator extends StatefulWidget {
+  const MyNavigator({Key? key}) : super(key: key);
+
+  @override
+  MyNavigatorState createState() => MyNavigatorState();
+}
+
+class MyNavigatorState extends State with TickerProviderStateMixin {
+  TabController? controller;
+  @override
+  void initState() {
+    super.initState();
+    controller = TabController(length: 3, vsync: this);
+  } //Para que this no tire error, hay que agregar with TickerProviderStateMixin
+
+  @override
+  void dispose() {
+    controller!.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Navigation Bar Demo'),
+        backgroundColor: const Color(0xFFE4502B),
+      ),
+      body: TabBarView(
+          controller: controller,
+          children: const [Alarm(), Watch(), AirPlane()]),
+      //Se debe traer los widgets con el nombre de la clase que indicamos en las pages
+      bottomNavigationBar: Material(
+        color: const Color.fromARGB(255, 39, 202, 161),
+        child: TabBar(
+          tabs: const [
+            Tab(icon: Icon(Icons.alarm)),
+            Tab(
+              icon: Icon(Icons.watch_later),
+            ),
+            Tab(
+              icon: Icon(Icons.airplanemode_active),
+            ),
+          ],
+          controller: controller,
+        ),
+      ),
+    );
+  }
+}

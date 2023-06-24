@@ -1,0 +1,50 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_application_1/pages/contacts.dart';
+import 'package:flutter_application_1/pages/home.dart';
+import 'package:flutter_application_1/pages/videos.dart';
+
+void main() {
+  runApp(const MaterialApp(
+    home: MyTabs(),
+  ));
+}
+
+class MyTabs extends StatefulWidget {
+  const MyTabs({Key? key}) : super(key: key);
+
+  @override
+  MyTabsState createState() => MyTabsState();
+}
+
+class MyTabsState extends State<MyTabs> with TickerProviderStateMixin {
+  TabController? controller; //Se crea un controlador de tipo TabController
+
+  @override
+  void initState() {
+    super.initState();
+    controller = TabController(length: 3, vsync: this);
+  } //Se inicializa el controlador
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Video Tabs'),
+        backgroundColor: Colors.blueGrey[700],
+        bottom: TabBar(
+          tabs: const [
+            Tab(icon: Icon(Icons.home), text: 'Home'),
+            Tab(icon: Icon(Icons.video_collection), text: 'Videos'),
+            Tab(icon: Icon(Icons.contacts), text: 'Contacts'),
+          ],
+          controller: controller,
+        ),
+      ),
+      body: TabBarView(
+        controller: controller,
+        //Siempre debe existir un controller dentro de TabBarView
+        children: const [Home(), Videos(), Contacts()],
+      ),
+    );
+  }
+}

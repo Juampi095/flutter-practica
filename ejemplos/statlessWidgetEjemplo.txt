@@ -1,0 +1,60 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MaterialApp(
+    home: MyApp(),
+  ));
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key); // Agregamos el parámetro key
+  @override
+  Widget build(BuildContext context) {
+    //El metodo build es para mostrar en pantalla, el override es para modificar el comportamiento del widget
+    return Scaffold(
+      //Scaffold es un widget que nos permite crear una estructura básica de una pantalla
+      appBar: AppBar(
+        //AppBar es un widget que nos permite crear una barra de navegación
+        title: const Text("Statless Widget"),
+      ),
+      body: Center(
+        child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: const <Widget>[
+              MyCard(
+                title: Text("I like this video"),
+                icon: Icon(Icons.thumb_up),
+              ),
+              MyCard(
+                title: Text("I love flutter"),
+                icon: Icon(Icons.thumb_up),
+              ),
+              MyCard(
+                title: Text("I like flutter video"),
+                icon: Icon(Icons.local_parking, size: 40.0),
+              ),
+            ]),
+      ),
+    );
+  } //Esta es la forma correcta de crear un widget reutilizable
+}
+
+class MyCard extends StatelessWidget {
+  final Widget? title;
+  final Widget? icon;
+
+  const MyCard({Key? key, this.title, this.icon}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+    Padding const EdgeInsets.only(bottom: 1.0),
+      child: Column(
+        children: [
+          if (title != null) title!,
+          if (icon != null) icon!,
+        ],
+      ),
+    );
+  }
+}
