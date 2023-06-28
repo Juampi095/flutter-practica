@@ -1,0 +1,58 @@
+import 'package:flutter/material.dart';
+
+class Home extends StatefulWidget {
+  const Home({Key? key}) : super(key: key);
+
+  @override
+  HomeState createState() => HomeState();
+}
+
+class HomeState extends State {
+  Drawer getDrawer(BuildContext context) {
+    var header = const DrawerHeader(child: Text("Ajustes"));
+    var info = const AboutListTile(
+      applicationVersion: "v1.0.0",
+      applicationName: "Demo Drawer",
+      applicationIcon: Icon(Icons.favorite),
+      icon: Icon(Icons.info_outline),
+      child: Text("Informacion App"),
+    );
+
+    ListTile getItem(Icon icon, String description, String route) {
+      return ListTile(
+        leading: icon,
+        title: Text(description),
+        onTap: () {
+          setState(() {
+            Navigator.of(context).pushNamed(route);
+          });
+        },
+      );
+    }
+
+    ListView listView = ListView(
+      children: [
+        header, //Aca va el header
+        getItem(const Icon(Icons.settings), "Configuracion",
+            "./configuracion.dart"),
+        getItem(const Icon(Icons.account_box), "Account", "./account.dart"),
+        getItem(
+            const Icon(Icons.battery_std_rounded), "Bateria", "./bateria.dart"),
+        info, //Aca va toda la info de la app que hicimos mas arriba
+      ],
+    );
+    return Drawer(
+      child: listView,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Demo Menu'),
+      ),
+      drawer: getDrawer(context),
+    );
+  }
+}
