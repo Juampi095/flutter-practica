@@ -1,0 +1,44 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MaterialApp(
+    home: MySnackBar(),
+  ));
+}
+
+class MySnackBar extends StatelessWidget {
+  const MySnackBar({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("SnackBar Demo"),
+      ),
+      body: const Center(
+        child: MyButton(),
+      ),
+    );
+  }
+}
+
+class MyButton extends StatelessWidget {
+  //Aca se crea la clase MyButton, la cual inicializamos en el child MyButton
+  const MyButton({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+        onPressed: () {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: const Text("Hola soy un snackBar :)"),
+            duration: const Duration(seconds: 5),
+            action: SnackBarAction(
+                label: "Click Aqui",
+                onPressed: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Hola, nuevamente :)")));
+                }),
+          ));
+        },
+        child: const Text("Desplegar SnackBar"));
+  }
+}
